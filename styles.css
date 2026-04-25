@@ -1,0 +1,283 @@
+/* ── Widget container ────────────────────────────────────────────────────── */
+#fbwm-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 268px;
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 14px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(99, 102, 241, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+               'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  font-size: 13px;
+  color: #cbd5e1;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-radius 0.2s ease;
+  user-select: none;
+}
+
+#fbwm-widget.fbwm-admitted-flash {
+  animation: fbwm-flash 0.5s ease 0s 6 alternate;
+  border-color: #22c55e;
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.5), 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes fbwm-flash {
+  from { background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); }
+  to   { background: linear-gradient(145deg, #052e16 0%, #14532d 100%); }
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+#fbwm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(99, 102, 241, 0.1);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  cursor: move;
+}
+
+#fbwm-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+  letter-spacing: 0.02em;
+}
+
+#fbwm-controls {
+  display: flex;
+  gap: 4px;
+}
+
+#fbwm-controls button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: background 0.15s, color 0.15s;
+}
+
+#fbwm-controls button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+}
+
+#fbwm-close:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  color: #f87171 !important;
+}
+
+/* ── Status dot ─────────────────────────────────────────────────────────── */
+#fbwm-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fbwm-dot-idle   { background: #475569; }
+.fbwm-dot-yellow { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+.fbwm-dot-green  { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+.fbwm-dot-red    { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+
+.fbwm-dot-blink {
+  background: #6366f1;
+  box-shadow: 0 0 6px #6366f1;
+  animation: fbwm-blink 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes fbwm-blink {
+  from { opacity: 1; }
+  to   { opacity: 0.3; }
+}
+
+/* ── Body ───────────────────────────────────────────────────────────────── */
+#fbwm-body {
+  padding: 14px 14px 10px;
+}
+
+/* ── Position section ───────────────────────────────────────────────────── */
+#fbwm-position-section {
+  text-align: center;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+#fbwm-pos-label {
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+#fbwm-pos-value {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ef4444;
+  letter-spacing: -0.02em;
+  transition: color 0.4s ease;
+}
+
+#fbwm-pos-value.fbwm-updated {
+  animation: fbwm-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fbwm-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+#fbwm-pos-change {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  opacity: 0;
+  animation: fbwm-fade-in 0.3s ease forwards;
+}
+
+#fbwm-pos-change.fbwm-pos-down {
+  opacity: 1;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+#fbwm-pos-change.fbwm-pos-up {
+  opacity: 1;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+@keyframes fbwm-fade-in {
+  from { opacity: 0; transform: translateY(-40%) scale(0.8); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* ── Progress bar ───────────────────────────────────────────────────────── */
+#fbwm-progress-section {
+  margin-bottom: 14px;
+}
+
+#fbwm-progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+#fbwm-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: #ef4444;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease;
+  min-width: 3px;
+}
+
+#fbwm-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #475569;
+}
+
+/* ── Stats grid ─────────────────────────────────────────────────────────── */
+#fbwm-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.fbwm-stat {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 7px 8px;
+  text-align: center;
+}
+
+.fbwm-stat-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1.2;
+}
+
+.fbwm-stat-label {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* ── Status bar ─────────────────────────────────────────────────────────── */
+#fbwm-status-bar {
+  font-size: 12px;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 8px;
+  color: #94a3b8;
+  transition: background 0.3s, color 0.3s;
+}
+
+#fbwm-status-bar.fbwm-queued {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+#fbwm-status-bar.fbwm-admitted {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+  font-weight: 600;
+}
+
+#fbwm-status-bar.fbwm-error {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+  font-size: 11px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+#fbwm-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #475569;
+}
+
+#fbwm-countdown {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: center;
+}

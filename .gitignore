@@ -1,0 +1,7 @@
+.claude
+.DS_Store
+*.pem
+*.crx
+*.zip
+icons/icon_base.png
+node_modules/
